@@ -22,65 +22,63 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diego.order.dto.CategoryRequest;
 import com.diego.order.dto.CategoryResponse;
-import com.diego.order.repository.CategoryRepository;
 import com.diego.order.service.CategoryService;
 
 @RestController
 @RequestMapping("categories")
 public class CategoryController {
 
-	private final CategoryRepository categoryRepository;
 	private final CategoryService categoryService;
 	
-	public CategoryController(CategoryRepository categoryRepository, CategoryService categoryService) {
-		this.categoryRepository = categoryRepository;
+	public CategoryController(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
 	
 	@GetMapping
 	public ResponseEntity<List<CategoryResponse>> findAll() {
-		var categories = categoryRepository.findAll().stream().map(CategoryResponse::new).collect(Collectors.toList());
+		var categories = categoryService.findAll().stream().map(CategoryResponse::new).collect(Collectors.toList());
 		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("/page")
 	public ResponseEntity<Page<CategoryResponse>> findAllPage(
-			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable pageRequest) {
-		var categories = categoryRepository.findAll(pageRequest).map(CategoryResponse::new);
+			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable pageable) {
+		var categories = categoryService.findAll(pageable).map(CategoryResponse::new);
 		return ResponseEntity.ok(categories);
 	}	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoryResponse> find(@PathVariable Long id) {
+	public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
 		var category = categoryService.findById(id);
 		return ResponseEntity.ok(new CategoryResponse(category));
 	}
 	
 	@GetMapping("/description/{description}")
 	public ResponseEntity<List<CategoryResponse>> findByDescription(@PathVariable String description) {
-		var categories = categoryRepository.findByDescriptionLike(description)
+		var categories = categoryService.findByDescriptionLike(description)
 							.stream().map(CategoryResponse::new).collect(Collectors.toList());
 		return ResponseEntity.ok(categories);
 	}
 	
 	@PostMapping
 	public ResponseEntity<CategoryResponse> save(@Valid @RequestBody CategoryRequest categoryRequest) {
-		var category = categoryRepository.save(categoryRequest.toModel());
+		var category = categoryService.save(categoryRequest.toModel());
 		return new ResponseEntity<CategoryResponse>(new CategoryResponse(category), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @Valid @RequestBody CategoryRequest categoryRequest) {
+	public ResponseEntity<CategoryResponse> update(@PathVariable Long id, 
+			@Valid @RequestBody CategoryRequest categoryRequest) {
 		var category = categoryService.findById(id);
 		category.update(categoryRequest.toModel());
-		categoryRepository.save(category);
+		categoryService.update(category);
 		return ResponseEntity.ok(new CategoryResponse(category));
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		var category = categoryService.findById(id);
-		categoryRepository.delete(category);			
+		categoryService.delete(category);			
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -8,6 +8,13 @@ public class CategoryRequest {
 
 	@NotBlank(message = "field cannot blank")
 	private String description;
+	
+	@Deprecated
+	public CategoryRequest() {}
+
+	public CategoryRequest(String description) {
+		this.description = description;
+	}
 
 	public Category toModel() {
 		return new Category(description);
