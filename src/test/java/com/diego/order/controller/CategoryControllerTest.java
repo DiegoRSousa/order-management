@@ -55,7 +55,7 @@ class CategoryControllerTest {
 	@Test
 	void findAll_ReturnsListOfCategoryInsidePageObject_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
-		var request = categoryController.findAllPage(null);
+		var request = categoryController.findAll(null);
 		
 		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
 		Assertions.assertThat(request.getBody()).isNotNull();
@@ -97,7 +97,7 @@ class CategoryControllerTest {
 			.when(categoryService).findById(ArgumentMatchers.anyLong());
 		
 		Assertions.assertThatExceptionOfType(ObjectNotFoundException.class)
-		.isThrownBy(() -> categoryController.findById(1L));
+			.isThrownBy(() -> categoryController.findById(1L));
 	}
 	
 	@Test
@@ -138,7 +138,15 @@ class CategoryControllerTest {
 			.isEqualTo(expectedDescription);
 		Assertions.assertThat(request.getBody().getCreatedAt()).isNotNull();
 		Assertions.assertThat(request.getBody().getUpdatedAt()).isNull();
-		
+	}
+	
+	@Test
+	void save_ReturnsObjectNotFoundException_WhenNotFound() {
+		BDDMockito.when(categoryService.save(ArgumentMatchers.any(Category.class)))
+			.thenThrow(ConstraintViolationException.class);
+	
+		Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+			.isThrownBy(() -> categoryController.save(categoryRequest));
 	}
 	
 	@Test

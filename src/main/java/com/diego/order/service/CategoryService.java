@@ -28,7 +28,8 @@ public class CategoryService {
 	}
 	
 	public Category findById(Long id) {
-		return categoryRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, Category.class.getSimpleName()));
+		return categoryRepository.findById(id).orElseThrow(() 
+				-> new ObjectNotFoundException(id, Category.class.getSimpleName()));
 	}
 
 	public List<Category> findByDescriptionLike(String description) {

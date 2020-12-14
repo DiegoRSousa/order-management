@@ -41,7 +41,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<Page<CategoryResponse>> findAllPage(
+	public ResponseEntity<Page<CategoryResponse>> findAll(
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable pageable) {
 		var categories = categoryService.findAll(pageable).map(CategoryResponse::new);
 		return ResponseEntity.ok(categories);
