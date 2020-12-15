@@ -11,6 +11,8 @@ public class CategoryResponse {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
+	@Deprecated
+	public CategoryResponse() {}
 	public CategoryResponse(Category category) {
 		this.id = category.getId();
 		this.description = category.getDescription();

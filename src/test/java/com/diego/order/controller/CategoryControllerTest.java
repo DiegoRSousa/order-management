@@ -55,40 +55,40 @@ class CategoryControllerTest {
 	@Test
 	void findAll_ReturnsListOfCategoryInsidePageObject_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
-		var request = categoryController.findAll(null);
+		var response = categoryController.findAll(null);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody()).isNotNull();
-		Assertions.assertThat(request.getBody().toList())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody()).isNotNull();
+		Assertions.assertThat(response.getBody().toList())
 			.isNotNull()
 			.isNotEmpty()
 			.hasSize(1);
-		Assertions.assertThat(request.getBody().toList().get(0).getDescription()).isEqualTo(expectedDescription);
+		Assertions.assertThat(response.getBody().toList().get(0).getDescription()).isEqualTo(expectedDescription);
 	}
 	
 	@Test
 	void findAll_ReturnsListOfCategory_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
-		var request = categoryController.findAll();
+		var response = categoryController.findAll();
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody())
 			.isNotNull()
 			.isNotEmpty()
 			.hasSize(1);
-		Assertions.assertThat(request.getBody().get(0).getDescription()).isEqualTo(expectedDescription);
+		Assertions.assertThat(response.getBody().get(0).getDescription()).isEqualTo(expectedDescription);
 	}
 	
 	@Test
 	void findById_ReturnsCategory_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
 		var expectedId = category.getId();
-		var request = categoryController.findById(1l);
+		var response = categoryController.findById(1l);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody()).isNotNull();
-		Assertions.assertThat(request.getBody().getDescription()).isEqualTo(expectedDescription);
-		Assertions.assertThat(request.getBody().getId()).isEqualTo(expectedId);
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody()).isNotNull();
+		Assertions.assertThat(response.getBody().getDescription()).isEqualTo(expectedDescription);
+		Assertions.assertThat(response.getBody().getId()).isEqualTo(expectedId);
 	}
 	
 	@Test
@@ -103,14 +103,14 @@ class CategoryControllerTest {
 	@Test
 	void findByDescription_ReturnsListOfCategory_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
-		var request = categoryController.findAll();
+		var response = categoryController.findAll();
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody())
 			.isNotNull()
 			.isNotEmpty()
 			.hasSize(1);
-		Assertions.assertThat(request.getBody().get(0).getDescription()).isEqualTo(expectedDescription);
+		Assertions.assertThat(response.getBody().get(0).getDescription()).isEqualTo(expectedDescription);
 	}
 	
 	@Test
@@ -118,10 +118,10 @@ class CategoryControllerTest {
 		BDDMockito.when(categoryService.findByDescriptionLike(ArgumentMatchers.any()))
 	 	.thenReturn(Collections.emptyList());
 		
-		var request = categoryController.findByDescription(null);
+		var response = categoryController.findByDescription(null);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody())
 			.isNotNull()
 			.isEmpty();
 	}
@@ -129,15 +129,15 @@ class CategoryControllerTest {
 	@Test
 	void save_ReturnsCategory_WhenSuccessful() {
 		var expectedDescription = category.getDescription();
-		var request = categoryController.save(categoryRequest);
+		var response = categoryController.save(categoryRequest);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-		Assertions.assertThat(request.getBody()).isNotNull();
-		Assertions.assertThat(request.getBody().getDescription())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		Assertions.assertThat(response.getBody()).isNotNull();
+		Assertions.assertThat(response.getBody().getDescription())
 			.isNotNull()
 			.isEqualTo(expectedDescription);
-		Assertions.assertThat(request.getBody().getCreatedAt()).isNotNull();
-		Assertions.assertThat(request.getBody().getUpdatedAt()).isNull();
+		Assertions.assertThat(response.getBody().getCreatedAt()).isNotNull();
+		Assertions.assertThat(response.getBody().getUpdatedAt()).isNull();
 	}
 	
 	@Test
@@ -152,22 +152,22 @@ class CategoryControllerTest {
 	@Test
 	void update_ReturnsCategory_WhenSuccessful() {
 		var expectedDescription = categoryRequest.getDescription();
-		var request = categoryController.update(1L, categoryRequest);
+		var response = categoryController.update(1L, categoryRequest);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.OK);
-		Assertions.assertThat(request.getBody()).isNotNull();
-		Assertions.assertThat(request.getBody().getDescription())
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		Assertions.assertThat(response.getBody()).isNotNull();
+		Assertions.assertThat(response.getBody().getDescription())
 			.isNotNull()
 			.isEqualTo(expectedDescription);
-		Assertions.assertThat(request.getBody().getCreatedAt()).isNotNull();
+		Assertions.assertThat(response.getBody().getCreatedAt()).isNotNull();
 	}
 	
 	@Test
 	void delete_ReturnsNoContent_WhenSuccessful() {
-		var request = categoryController.delete(1L);
+		var response = categoryController.delete(1L);
 		
-		Assertions.assertThat(request.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-		Assertions.assertThat(request.getBody()).isNull();
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+		Assertions.assertThat(response.getBody()).isNull();
 		
 	}
 }

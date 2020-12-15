@@ -54,15 +54,14 @@ class CategoryRepositoryTest {
 	}
 	
 	@Test
-	void findByName_FoundCategory_WhenSuccessful() {
-		var description = category.getDescription();
-		var categories = categoryRepository.findByDescriptionLike(description);
+	void findByDescription_FoundCategory_WhenSuccessful() {
+		var categories = categoryRepository.findByDescriptionLike("Pizz%");
 		
 		Assertions.assertThat(categories).isNotEmpty().contains(category);
 	}
 	
 	@Test
-	void findByName_NotFoundCategory_WhenSuccessful() {
+	void findByDescription_NotFoundCategory_WhenSuccessful() {
 		var categories = categoryRepository.findByDescriptionLike("Lanche");
 		
 		Assertions.assertThat(categories).isEmpty();
