@@ -2,7 +2,7 @@
 
 GET {{baseUrl}}/categories
 ###
-GET {{baseUrl}}/categories/page
+GET {{baseUrl}}/categories/page?size=2&page=1
 
 ###
 GET  {{baseUrl}}/categories/4
