@@ -6,17 +6,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.diego.order.exception.ConstraintException;
 import com.diego.order.exception.ObjectNotFoundException;
 import com.diego.order.model.Category;
 import com.diego.order.repository.CategoryRepository;
+import com.diego.order.repository.ProductRepository;
 
 @Service
 public class CategoryService {
 
 	private final CategoryRepository categoryRepository;
-
-	public CategoryService(CategoryRepository categoryRepository) {
+	private final ProductRepository productRepository;
+	
+	public CategoryService(CategoryRepository categoryRepository, ProductRepository productRepository) {
 		this.categoryRepository = categoryRepository;
+		this.productRepository = productRepository;
 	}
 	
 	public List<Category> findAll() {
@@ -45,6 +49,10 @@ public class CategoryService {
 	}
 	
 	public void delete(Category category) {
+		var products = productRepository.findByCategory(category);
+		if(!products.isEmpty())
+			throw new ConstraintException("Category: " + category.getDescription() + " in use!"); 
+						
 		categoryRepository.delete(category);
 	}
 }

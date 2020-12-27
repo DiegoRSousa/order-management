@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{baseUrl}}/categories/4
+DELETE {{baseUrl}}/categories/6
 
 ### Product
 GET {{baseUrl}}/products
@@ -62,4 +62,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{baseUrl}}/products/4
+DELETE {{baseUrl}}/products/1
