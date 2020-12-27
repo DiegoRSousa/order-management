@@ -24,7 +24,7 @@ public class Category implements Serializable {
 	
 	@Deprecated
 	public Category() {}
-	public Category(String description) {
+	public Category(@NotBlank(message = "field cannot blank") String description) {
 		this.description = description;
 	}
 	

@@ -27,3 +27,39 @@ Content-Type: application/json
 
 ###
 DELETE {{baseUrl}}/categories/4
+
+### Product
+GET {{baseUrl}}/products
+###
+GET {{baseUrl}}/products/page?size=2&page=7
+###
+GET  {{baseUrl}}/products/1
+###
+GET {{baseUrl}}/products/description/%especial%
+###
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+    "code": "0017",
+    "description": "Pizza Grande",
+    "price": 33.00,
+    "quantity": 0.00,
+    "categoryId": 1
+}
+###
+PUT {{baseUrl}}/products/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "code": "0001",
+  "barcode": "",
+  "description": "Regrigerante Lata",
+  "price": 5.00,
+  "quantity": 0.00,
+  "categoryId": 4
+}
+
+###
+DELETE {{baseUrl}}/products/4
