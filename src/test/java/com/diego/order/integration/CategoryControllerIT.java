@@ -34,8 +34,8 @@ class CategoryControllerIT {
 
 	@BeforeEach
 	void setup() {
-		category = new Category("Pizza");
-		categoryRequest = new CategoryRequest("Suco");
+		category = new Category("Pizzas");
+		categoryRequest = new CategoryRequest("Sucos");
 	}
 
 	@Test
@@ -48,7 +48,6 @@ class CategoryControllerIT {
 
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		Assertions.assertThat(response.getBody()).isNotNull();
-		Assertions.assertThat(response.getBody().toList()).isNotEmpty().hasSize(3);
 		Assertions.assertThat(response.getBody().toList().get(0).getDescription()).isEqualTo(expectedDescription);
 	}
 
@@ -62,7 +61,7 @@ class CategoryControllerIT {
 
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		Assertions.assertThat(response.getBody()).isNotNull();
-		Assertions.assertThat(response.getBody()).isNotEmpty().hasSize(3);
+		Assertions.assertThat(response.getBody()).isNotEmpty().hasSize(6);
 		Assertions.assertThat(response.getBody().get(0).getDescription()).isEqualTo(expectedDescription);
 	}
 
@@ -153,11 +152,19 @@ class CategoryControllerIT {
 	
 	@Test
 	void delete_ReturnsNoContent_WhenSuccessful() {
-		var response = testRestTemplate.exchange("/categories/1", HttpMethod.DELETE, 
+		var response = testRestTemplate.exchange("/categories/6", HttpMethod.DELETE, 
 				null, Void.class);
 		
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 		Assertions.assertThat(response.getBody()).isNull();
+	}
+	
+	@Test
+	void delete_ReturnsBadRequest_WhenUnsuccessful() {
+		var response = testRestTemplate.exchange("/categories/4", HttpMethod.DELETE, 
+				null, Void.class);
 		
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+		Assertions.assertThat(response.getBody()).isNull();
 	}
 }
