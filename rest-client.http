@@ -53,7 +53,7 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "code": "0001",
+  "code": "0002",
   "barcode": "",
   "description": "Regrigerante Lata",
   "price": 5.00,

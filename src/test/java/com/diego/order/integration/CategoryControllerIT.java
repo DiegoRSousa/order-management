@@ -124,7 +124,7 @@ class CategoryControllerIT {
 	}
 	
 	@Test
-	void save_ReturnsObjectNotFoundException_WhenNotFound() {
+	void save_ReturnsBadRequest_WhenUnsuccessful() {
 		categoryRequest.setDescription("");
 		var response = testRestTemplate.postForEntity("/categories", categoryRequest, ValidationError.class);
 		
