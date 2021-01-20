@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -35,12 +37,14 @@ public class CategoryController {
 	}
 	
 	@GetMapping
+	@Cacheable("findAllCategory")
 	public ResponseEntity<List<CategoryResponse>> findAll() {
 		var categories = categoryService.findAll().stream().map(CategoryResponse::new).collect(Collectors.toList());
 		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("/page")
+	@Cacheable("findAllPageCategory")
 	public ResponseEntity<Page<CategoryResponse>> findAll(
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable pageable) {
 		var categories = categoryService.findAll(pageable).map(CategoryResponse::new);
@@ -61,12 +65,14 @@ public class CategoryController {
 	}
 	
 	@PostMapping
+	@CacheEvict(value = {"findAllCategory", "findAllPageCategory"}, allEntries = true)
 	public ResponseEntity<CategoryResponse> save(@Valid @RequestBody CategoryRequest categoryRequest) {
 		var category = categoryService.save(categoryRequest.toModel());
 		return new ResponseEntity<CategoryResponse>(new CategoryResponse(category), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
+	@CacheEvict(value = {"findAllCategory", "findAllPageCategory"}, allEntries = true)
 	public ResponseEntity<CategoryResponse> update(@PathVariable Long id, 
 			@Valid @RequestBody CategoryRequest categoryRequest) {
 		var category = categoryService.findById(id);
@@ -76,6 +82,7 @@ public class CategoryController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@CacheEvict(value = {"findAllCategory", "findAllPageCategory"}, allEntries = true)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		var category = categoryService.findById(id);
 		categoryService.delete(category);			
