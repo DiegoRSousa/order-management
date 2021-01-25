@@ -19,7 +19,7 @@
 
 ### Documentation 
 
-Swagger (development environment) [http://localhost:8080/swagger-ui/index.html] (http://localhost:8080/swagger-ui/index.html)
+Swagger (development environment) [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ### Technologies used 
 
