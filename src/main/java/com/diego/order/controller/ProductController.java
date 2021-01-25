@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -44,7 +45,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<Page<ProductResponse>> findAll(
+	public ResponseEntity<Page<ProductResponse>> findAll(@ParameterObject
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable pageable) {
 		var products = productService.findAll(pageable).map(ProductResponse::new);
 		return ResponseEntity.ok(products);
