@@ -65,15 +65,15 @@ Content-Type: application/json
 DELETE {{baseUrl}}/products/1
 
 ### Client
-GET {{baseUrl}}/clients
+GET {{baseUrl}}/customers
 ###
-GET {{baseUrl}}/clients/page?size=2&page=1
+GET {{baseUrl}}/customers/page?size=2&page=1
 ###
-GET {{baseUrl}}/clients/7
+GET {{baseUrl}}/customers/4
 ###
-GET {{baseUrl}}/clients/name/%allana%
+GET {{baseUrl}}/customers/name/%allana%
 ###
-POST {{baseUrl}}/clients
+POST {{baseUrl}}/customers
 Content-Type: application/json
 
 {
@@ -88,11 +88,39 @@ Content-Type: application/json
 }
 
 ###
-PUT {{baseUrl}}/clients/7
+POST {{baseUrl}}/customers
 Content-Type: application/json
 
 {
     "cpf": "78447421734",
+    "cep": "32215153",
+    "street": "Rua Sapucaia",
+    "number": "323",
+    "neighborhood": "Jardim Industrial",
+    "blocked": true,
+    "creditLimit": -1.00
+}
+
+###
+PUT {{baseUrl}}/customers/8
+Content-Type: application/json
+
+{
+    "cpf": "78447421734",
+    
+    "cep": "32215153",
+    "street": "Rua Sapucaia",
+    "number": "324",
+    "neighborhood": "Jardim Industrial",
+    "blocked": true,
+    "creditLimit": -1000.00
+}
+###
+PUT {{baseUrl}}/customers/7
+Content-Type: application/json
+
+{
+    "cpf": "78807425734",
     "name": "Allana Rosa Silva",
     "cep": "32215153",
     "street": "Rua Sapucaia",
@@ -101,5 +129,6 @@ Content-Type: application/json
     "blocked": true,
     "creditLimit": 1000.00
 }
+
 ###
-DELETE {{baseUrl}}/clients/1
+DELETE {{baseUrl}}/customers/7

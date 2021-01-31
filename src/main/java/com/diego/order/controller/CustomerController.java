@@ -3,6 +3,8 @@ package com.diego.order.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,7 +64,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CustomerResponse> save(@RequestBody CustomerRequest customerRequest) {
+	public ResponseEntity<CustomerResponse> save(@Valid @RequestBody CustomerRequest customerRequest) {
 		var customerValidation = customerRepository.findByCpf(customerRequest.getCpf());
 		if(customerValidation != null)
 			throw new DataIntegrityException("customer with code: " + customerRequest.getCpf() + "  already exists!");
@@ -71,7 +73,7 @@ public class CustomerController {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<CustomerResponse> update(@PathVariable Long id, @RequestBody CustomerRequest customerRequest) {
+	public ResponseEntity<CustomerResponse> update(@Valid @PathVariable Long id, @RequestBody CustomerRequest customerRequest) {
 		var customer = customerRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, Customer.class.getSimpleName()));
 		var customerValidation = customerRepository.findByCpf(customerRequest.getCpf());
 		if(customerValidation != null && customerValidation.getId() != customer.getId())
