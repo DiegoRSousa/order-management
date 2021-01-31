@@ -63,3 +63,43 @@ Content-Type: application/json
 
 ###
 DELETE {{baseUrl}}/products/1
+
+### Client
+GET {{baseUrl}}/clients
+###
+GET {{baseUrl}}/clients/page?size=2&page=1
+###
+GET {{baseUrl}}/clients/7
+###
+GET {{baseUrl}}/clients/name/%allana%
+###
+POST {{baseUrl}}/clients
+Content-Type: application/json
+
+{
+    "cpf": "78447421734",
+    "name": "Allana Rosa",
+    "cep": "32215153",
+    "street": "Rua Sapucaia",
+    "number": "323",
+    "neighborhood": "Jardim Industrial",
+    "blocked": true,
+    "creditLimit": 1000.00
+}
+
+###
+PUT {{baseUrl}}/clients/7
+Content-Type: application/json
+
+{
+    "cpf": "78447421734",
+    "name": "Allana Rosa Silva",
+    "cep": "32215153",
+    "street": "Rua Sapucaia",
+    "number": "324",
+    "neighborhood": "Jardim Industrial",
+    "blocked": true,
+    "creditLimit": 1000.00
+}
+###
+DELETE {{baseUrl}}/clients/1

@@ -6,7 +6,7 @@
 
  - [x] category crud
  - [x] product crud
- - [ ] client crud
+ - [x] customer crud
  - [ ] order crud
  
 ### How to Install

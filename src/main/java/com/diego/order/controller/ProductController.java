@@ -72,8 +72,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<ProductResponse> update(@PathVariable Long id, 
-			@Valid @RequestBody ProductRequest productRequest) {
+	public ResponseEntity<ProductResponse> update(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest) {
 		var product = productService.findById(id);
 		var category = categoryService.findById(id);
 		product.update(productRequest.toModel(category));
